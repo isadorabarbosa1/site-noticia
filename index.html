@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esporte & Vida - Portal de Notícias</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        :root {
+            --cor-primaria: #c4170c;
+            --cor-primaria-hover: #e0190e;
+            --cor-fundo: #f0f2f5;
+            --cor-card: #ffffff;
+            --cor-texto: #1c1e21;
+            --cor-subtexto: #65676b;
+            --cor-borda: #e4e6eb;
+            --sombra: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --sombra-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            line-height: 1.5;
+            color: var(--cor-texto);
+            background-color: var(--cor-fundo);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--cor-primaria);
+            color: #ffffff;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(196, 23, 12, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: lowercase;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* --- NAV / MENU BAR --- */
+        nav {
+            background-color: #ffffff;
+            border-bottom: 2px solid var(--cor-borda);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+        }
+
+        nav a {
+            color: var(--cor-texto);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--cor-primaria);
+            background-color: rgba(196, 23, 12, 0.08);
+        }
+
+        /* --- CONTAINER PRINCIPAL --- */
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* --- BADGES --- */
+        .tag-categoria {
+            display: inline-block;
+            background-color: var(--cor-primaria);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- CARDS DE NOTÍCIAS --- */
+        section {
+            background: var(--cor-card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--cor-borda);
+            box-shadow: var(--sombra);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        section:hover {
+            box-shadow: var(--sombra-hover);
+        }
+
+        section h2 {
+            color: var(--cor-texto);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+
+        section p {
+            margin-bottom: 1rem;
+            color: #4b4f56;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background-color: #fafafa;
+            border: 1px solid var(--cor-borda);
+            border-left: 5px solid var(--cor-primaria);
+            padding: 1.4rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            color: var(--cor-primaria);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+
+        /* --- LISTAS ESTILIZADAS --- */
+        ul, ol {
+            margin: 1.2rem 0;
+            padding-left: 1.5rem;
+        }
+
+        ul li, ol li {
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            color: var(--cor-texto);
+        }
+
+        .mais-lidas ol {
+            counter-reset: top-news;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .mais-lidas ol li {
+            position: relative;
+            padding-left: 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .mais-lidas ol li::before {
+            counter-increment: top-news;
+            content: counter(top-news);
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--cor-primaria);
+            font-size: 1.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        /* Lista Aninhada */
+        .categorias-lista > li {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .categorias-lista ul {
+            margin: 0.5rem 0 0.5rem 1rem;
+        }
+
+        .categorias-lista ul li {
+            font-weight: 400;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        /* Lista de Descrição */
+        dl {
+            margin-top: 1rem;
+        }
+
+        dt {
+            font-weight: 800;
+            color: var(--cor-primaria);
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        dd {
+            margin-left: 0;
+            margin-bottom: 0.8rem;
+            color: var(--cor-subtexto);
+        }
+
+        /* --- TABELAS --- */
+        .tabela-wrapper {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        thead {
+            background-color: var(--cor-primaria);
+            color: #ffffff;
+        }
+
+        th, td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--cor-borda);
+        }
+
+        th {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        tfoot {
+            background-color: #fafafa;
+            font-weight: 700;
+            border-top: 2px solid var(--cor-primaria);
+        }
+
+        tfoot td {
+            color: var(--cor-texto);
+        }
+
+        /* --- GALERIA DE IMAGENS & FOTOS --- */
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 1.5rem;
+            margin: 1.8rem 0;
+        }
+
+        .imagem-exemplo {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .galeria .imagem-exemplo {
+            margin: 0;
+            text-align: left;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid var(--cor-borda);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .galeria .imagem-exemplo:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--sombra-hover);
+        }
+
+        .img-amostra {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--cor-borda);
+            display: block;
+        }
+
+        .galeria .img-amostra {
+            height: 180px;
+            border-radius: 0;
+            border: none;
+        }
+
+        .legenda {
+            font-size: 0.88rem;
+            color: var(--cor-subtexto);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .galeria .legenda {
+            padding: 0.8rem 1rem;
+            margin-top: 0;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        /* --- VÍDEO RESPONSIVO --- */
+        .video-exemplo {
+            margin: 1.8rem 0;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--sombra);
+            border: 1px solid var(--cor-borda);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- SIDEBAR (ASIDE) --- */
+        aside {
+            background-color: #1c1e21;
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1100px;
+            box-shadow: var(--sombra);
+        }
+
+        aside h2 {
+            color: var(--cor-primaria);
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        aside ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        aside ul li {
+            position: relative;
+            padding-left: 1.2rem;
+            color: #e4e6eb;
+        }
+
+        aside ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--cor-primaria);
+            font-weight: bold;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #111214;
+            color: #8a8d91;
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 4px solid var(--cor-primaria);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>esporte & vida</h1>
+        <p>Sua fonte diária de saúde, alta performance e bem-estar.</p>
+    </header>
+
+    <nav>
+        <a href="#destaque">Futebol</a>
+        <a href="#modalidades">Modalidades</a>
+        <a href="#galeria">Em Foco</a>
+        <a href="#mais-lidas">Mais Lidas</a>
+        <a href="#categorias">Categorias</a>
+        <a href="#desempenho">Desempenho</a>
+        <a href="#publicar">Publicar Notícia</a>
+        <a href="#saude">Saúde & Bem-Estar</a>
+    </nav>
+
+    <main>
+        <!-- SEÇÃO DESTAQUE COM FOTO -->
+        <section id="destaque">
+            <span class="tag-categoria">Futebol</span>
+            <h2>Notícias em Destaque</h2>
+            <p>
+                Acompanhe a cobertura completa das principais competições nacionais e internacionais. 
+                Fique por dentro da preparação dos atletas, análises táticas e tudo o que envolve o 
+                universo dos esportes de alta performance e da vida saudável.
+            </p>
+
+            <div class="info-box">
+                <h3>Grande Final Se Aproxima</h3>
+                <p>
+                    Os times finalistas intensificam os treinos táticos nesta semana. 
+                    A expectativa é de público recorde nos estádios e uma disputa acirrada pelo título nacional.
+                </p>
+            </div>
+
+            <div class="imagem-exemplo">
+                <img src="imagens/imagens-capa-robo.png" alt="Atletas se preparando para a grande final." class="img-amostra" style="height: 350px;">
+                <p class="legenda">Preparação intensa das equipes antes da decisão.</p>
+            </div>
+        </section>
+
+        <!-- SEÇÃO MODALIDADES COM FOTO -->
+        <section id="modalidades">
+            <span class="tag-categoria">Modalidades</span>
+            <h2>Destaques do Calendário Esportivo</h2>
+            <p>
+                Confira o panorama das principais modalidades e o que vem movimentando as arenas pelo mundo:
+            </p>
+            <ul>
+                <li><strong>Futebol:</strong> reta final do campeonato com disputas diretas pelo topo da tabela.</li>
+                <li><strong>Basquete:</strong> playoffs começam com confrontos decisivos e grande presença de público.</li>
+                <li><strong>Vôlei:</strong> seleção brasileira inicia fase de amistosos focada nos torneios internacionais.</li>
+                <li><strong>Atletismo:</strong> novos recordes regionais são quebrados nas provas de corrida de rua.</li>
+            </ul>
+
+            <div class="imagem-exemplo">
+                <img src="imagens/imagem-lista.png" alt="Atletas em competição." class="img-amostra" style="height: 300px;">
+                <p class="legenda">Diversas modalidades movimentam o cenário esportivo nesta temporada.</p>
+            </div>
+        </section>
+
+        <!-- GALERIA COMPLETA COM AS 8 FOTOS MANTIDAS -->
+        <section id="galeria">
+            <span class="tag-categoria">Galeria</span>
+            <h2>Em Foco</h2>
+            <p>
+                Veja os momentos mais marcantes dos treinos, maratonas e bastidores da vida saudável de nossos atletas.
+            </p>
+
+            <div class="galeria">
+                <figure class="imagem-exemplo">
+                    <img src="imagens/primeira-fonte-tecnologia.png" class="img-amostra" alt="Treino funcional ao ar livre.">
+                    <figcaption class="legenda">Treino funcional ao ar livre para condicionamento físico</figcaption>
+                </figure>
+                <figure class="imagem-exemplo">
+                    <img src="imagens/imagem-tecnologia.png" class="img-amostra" alt="Corrida de rua urbana.">
+                    <figcaption class="legenda">Maratonistas enfrentam desafios nas corridas urbanas</figcaption>
+                </figure>
+                <figure class="imagem-exemplo">
+                    <img src="imagens/images-futebol.png" class="img-amostra" alt="Partida decisiva de futebol.">
+                    <figcaption class="legenda">Disputa acirrada pela posse de bola no clássico</figcaption>
+                </figure>
+                <figure class="imagem-exemplo">
+                    <img src="imagens/imagem-quatro.png" class="img-amostra" alt="Equipe de basquete em quadra.">
+                    <figcaption class="legenda">Trabalho em equipe garante a vitória no basquete</figcaption>
+                </figure>
+                <figure class="imagem-exemplo">
+                    <img src="imagens/imagem-cinco.png" class="img-amostra" alt="Atleta de natação.">
+                    <figcaption class="legenda">Foco e técnica nas provas de natação</figcaption>
+                </figure>
+                <figure class="imagem-exemplo">
+                    <img src="imagens/imagem-seis.png" class="img-amostra" alt="Alimentação equilibrada.">
+                    <figcaption class="legenda">Nutrição adequada é a base para o alto rendimento</figcaption>
+                </figure>
+                <figure class="imagem-exemplo">
+                    <img src="imagens/imagem-sete.png" class="img-amostra" alt="Prática de ioga ao por do sol.">
+                    <figcaption class="legenda">Cuidado com a mente e flexibilidade no pós-treino</figcaption>
+                </figure>
+                <figure class="imagem-exemplo">
+                    <img src="imagens/imagem-oito.png" class="img-amostra" alt="Ciclismo de estrada.">
+                    <figcaption class="legenda">Ciclistas percorrem longos trajetos em busca de resistência</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- DESAFIO PARTE 1 — NOTÍCIAS MAIS LIDAS -->
+        <section id="mais-lidas" class="mais-lidas">
+            <span class="tag-categoria">Em Alta</span>
+            <h2>Notícias mais lidas</h2>
+            <ol>
+                <li>Campeonato chega à grande final com público recorde</li>
+                <li>Nova rotina de treinos revoluciona desempenho de atletas</li>
+                <li>Governo anuncia novos incentivos ao esporte amador</li>
+                <li>Empresa lança tênis inteligente com sensores de pisada</li>
+                <li>Cientistas fazem descoberta sobre recuperação muscular no sono</li>
+            </ol>
+        </section>
+
+        <!-- DESAFIO PARTE 2 — CATEGORIAS (LISTA ANINHADA) -->
+        <section id="categorias">
+            <span class="tag-categoria">Navegação</span>
+            <h2>Categorias do Portal</h2>
+            <ul class="categorias-lista">
+                <li>Tecnologia
+                    <ul>
+                        <li>Inteligência Artificial</li>
+                        <li>Programação</li>
+                        <li>Hardware</li>
+                    </ul>
+                </li>
+                <li>Esportes
+                    <ul>
+                        <li>Futebol</li>
+                        <li>Basquete</li>
+                        <li>Vôlei</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <!-- SEÇÃO DESAFIOS E VÍDEO -->
+        <section id="desafios">
+            <span class="tag-categoria">Desafios</span>
+            <h2>Brasil se prepara para novos desafios no esporte</h2>
+            <p>
+                As equipes brasileiras estão intensificando os treinamentos para as
+                próximas competições internacionais. Atletas de diferentes modalidades buscam melhorar
+                seus resultados e conquistar novos títulos para o país.
+            </p>
+
+            <ul>
+                <li><strong>Futebol:</strong> clubes ajustam táticas para a pré-temporada.</li>
+                <li><strong>Vôlei:</strong> novos talentos ganham espaço nas categorias de base.</li>
+                <li><strong>Atletismo:</strong> rotina de treinos focada em superação de marcas pessoais.</li>
+                <li><strong>Ciclismo:</strong> provas de longa distância atraem atletas amadores e profissionais.</li>
+            </ul>
+
+            <div class="video-exemplo">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/KLGzWBlWG50"
+                        title="Vídeo sobre Esportes e Motivação" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="legenda">Confira a dedicação e bastidores do esporte.</p>
+            </div>
+        </section>
+
+        <!-- DESAFIO PARTE 3 E 4 — TABELA DE DESEMPENHO -->
+        <section id="desempenho">
+            <span class="tag-categoria">Estatísticas</span>
+            <h2>Desempenho das notícias</h2>
+            <p>Confira a métrica de acesso às principais matérias publicadas no portal nesta semana:</p>
+            
+            <div class="tabela-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Notícia</th>
+                            <th>Categoria</th>
+                            <th>Autor</th>
+                            <th>Visualizações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Campeonato chega à grande final</td>
+                            <td>Esportes</td>
+                            <td>Carlos Silva</td>
+                            <td>45.210</td>
+                        </tr>
+                        <tr>
+                            <td>Recuperação no musculo do sono</td>
+                            <td>Saúde</td>
+                            <td>Dra. Ana Costa</td>
+                            <td>32.450</td>
+                        </tr>
+                        <tr>
+                            <td>Tênis inteligente com sensores</td>
+                            <td>Tecnologia</td>
+                            <td>Lucas Mendes</td>
+                            <td>28.190</td>
+                        </tr>
+                        <tr>
+                            <td>Incentivos ao esporte amador</td>
+                            <td>Governo</td>
+                            <td>Mariana Rocha</td>
+                            <td>19.800</td>
+                        </tr>
+                        <tr>
+                            <td>Nova rotina de treinos intensos</td>
+                            <td>Esportes</td>
+                            <td>Pedro Alves</td>
+                            <td>15.430</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Total de visualizações</td>
+                            <td>141.080</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </section>
+
+        <!-- DESAFIO EXTRA — COMO PUBLICAR UMA NOTÍCIA -->
+        <section id="publicar">
+            <span class="tag-categoria">Guia da Redação</span>
+            <h2>Como publicar uma notícia</h2>
+            <p>Siga o passo a passo abaixo para submeter sua matéria à nossa equipe editorial:</p>
+
+            <ol>
+                <li>Escrever a notícia</li>
+                <li>Revisar o conteúdo</li>
+                <li>Adicionar imagens</li>
+                <li>Escolher a categoria</li>
+                <li>Publicar</li>
+            </ol>
+
+            <div class="info-box">
+                <h3>Termos Jornalísticos</h3>
+                <dl>
+                    <dt>Título</dt>
+                    <dd>É a frase principal que resume o tema da notícia e atrai a atenção do leitor.</dd>
+
+                    <dt>Lead</dt>
+                    <dd>É o primeiro parágrafo da notícia, responsável por responder às perguntas essenciais: o quê, quem, quando, onde, como e por quê.</dd>
+
+                    <dt>Fonte</dt>
+                    <dd>É a origem das informações transmitidas na matéria, como testemunhas, especialistas, documentos ou relatórios oficiais.</dd>
+                </dl>
+            </div>
+        </section>
+
+        <!-- SEÇÃO SAÚDE E BEM-ESTAR -->
+        <section id="saude">
+            <span class="tag-categoria">Bem-Estar</span>
+            <h2>Saúde e bem-estar em primeiro lugar</h2>
+
+            <div class="info-box">
+                <h3>Hábitos Essenciais para o Atleta Amador</h3>
+                <ul>
+                    <li>Manter uma alimentação rica em nutrientes e bem planejada.</li>
+                    <li>Praticar atividades físicas orientadas por profissionais.</li>
+                    <li>Garantir de 7 a 8 horas de sono restaurador por noite.</li>
+                    <li>Fazer exames de rotina para acompanhar o condicionamento.</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>Recuperação e Qualidade de Vida</h3>
+                <ul>
+                    <li>Hidratação constante antes, durante e após os exercícios.</li>
+                    <li>Respeitar os dias de descanso para evitar lesões musculares.</li>
+                    <li>Reservar momentos de relaxamento para diminuir o estresse.</li>
+                </ul>
+            </div>
+
+            <div class="video-exemplo">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/wOXmWcIm_QI"
+                        title="Vídeo sobre Saúde e Exercícios" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="legenda">Dicas práticas de exercícios e hábitos para uma vida saudável.</p>
+            </div>
+        </section>
+    </main>
+
+    <aside>
+        <h2>Outros Destaques da Semana</h2>
+        <ul>
+            <li>Corridas de rua batem recorde de inscrições neste ano.</li>
+            <li>Especialistas dão dicas para evitar lesões em treinos intensos.</li>
+            <li>Eventos de integração comunitária promovem a prática de esportes nas cidades.</li>
+        </ul>
+    </aside>
+
+    <footer>
+        <p>© Esporte & Vida — Todos os direitos reservados. Portal diário de notícias esportivas e saúde.</p>
+    </footer>
+
+</body>
+</html>
